@@ -1,0 +1,146 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math Visualizer</title>
+    <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
+</head>
+<body>
+    <div id="container">
+        <div id="canvas-container"></div>
+        <div id="sidebar">
+            <h1>Math Visualizer</h1>
+            
+            <!-- Dimension Selector -->
+            <div class="section">
+                <label>Dimension:</label>
+                <div class="dimension-buttons">
+                    <button class="btn btn-dimension" onclick="setDimension('2D')">2D</button>
+                    <button class="btn btn-dimension active" onclick="setDimension('3D')">3D</button>
+                    <button class="btn btn-dimension" onclick="setDimension('4D')">4D</button>
+                    <button class="btn btn-dimension" onclick="setDimension('5D')">5D</button>
+                </div>
+            </div>
+            
+            <!-- Equations -->
+            <div class="section">
+                <label>Equations <span id="equation-label">(z =)</span>:</label>
+                <div id="equations-container"></div>
+            </div>
+            
+            <!-- Math Keyboard Toggle -->
+            <div class="section">
+                <button class="btn btn-secondary" onclick="toggleKeyboard()" id="keyboard-toggle">
+                    Show Math Keyboard ⌨️
+                </button>
+            </div>
+            
+            <!-- Math Keyboard -->
+            <div id="math-keyboard" class="math-keyboard" style="display: none;">
+                <div class="keyboard-row">
+                    <button onclick="insertSymbol('√(')">√</button>
+                    <button onclick="insertSymbol('^2')">x²</button>
+                    <button onclick="insertSymbol('^3')">x³</button>
+                    <button onclick="insertSymbol('^')">xⁿ</button>
+                </div>
+                <div class="keyboard-row">
+                    <button onclick="insertSymbol('sin(')">sin</button>
+                    <button onclick="insertSymbol('cos(')">cos</button>
+                    <button onclick="insertSymbol('tan(')">tan</button>
+                    <button onclick="insertSymbol('abs(')">|x|</button>
+                </div>
+                <div class="keyboard-row">
+                    <button onclick="insertSymbol('log(')">log</button>
+                    <button onclick="insertSymbol('exp(')">eˣ</button>
+                    <button onclick="insertSymbol('pi')">π</button>
+                    <button onclick="insertSymbol('e')">e</button>
+                </div>
+                <div class="keyboard-row">
+                    <button onclick="insertSymbol('(')">(</button>
+                    <button onclick="insertSymbol(')')">)</button>
+                    <button onclick="insertSymbol('/')">/</button>
+                    <button onclick="insertSymbol('*')">×</button>
+                </div>
+            </div>
+            
+            <!-- Color Dimension -->
+            <div class="section" id="color-dimension-section" style="display: none;">
+                <label>Color (5th dim) =</label>
+                <input type="text" id="color-dimension" placeholder="x + y" oninput="updateGraph()">
+                <div class="color-preview" id="color-preview"></div>
+            </div>
+            
+            <!-- Axis Range -->
+            <div class="section">
+                <h3>Axis Range</h3>
+                <label>Range: <span class="value-tag" id="range-label">-5 to 5</span></label>
+                <input type="range" id="axis-range" min="1" max="100" step="1" value="5" oninput="updateAxisRange()">
+                <div class="slider-labels">
+                    <span>Small (1)</span>
+                    <span>Large (100)</span>
+                </div>
+            </div>
+            
+            <!-- Time Controls -->
+            <div class="time-control" id="time-control" style="display: none;">
+                <label>Time (t): <span class="value-tag" id="time-value">0.00</span></label>
+                <input type="range" id="time-slider" min="0" max="12.566" step="0.1" value="0" oninput="updateTimeValue()">
+                <button class="btn btn-primary" id="animate-btn" onclick="toggleAnimation()" style="margin-top: 0.75rem;">▶ Animate</button>
+            </div>
+            
+            <!-- Display Options -->
+            <div class="section">
+                <h3>Display Options</h3>
+                
+                <div style="margin-bottom: 1rem;">
+                    <label>Resolution: <span class="value-tag" id="resolution-label">50×50×50</span></label>
+                    <input type="range" id="resolution" min="10" max="200" step="10" value="50" oninput="updateResolution()">
+                    <div class="slider-labels">
+                        <span>Low (Fast)</span>
+                        <span>High (Detailed)</span>
+                    </div>
+                </div>
+                
+                <label class="checkbox-label">
+                    <input type="checkbox" id="show-axes" checked onchange="updateGraph()">
+                    <span>Show Axes</span>
+                </label>
+                
+                <label class="checkbox-label">
+                    <input type="checkbox" id="show-values" onchange="updateGraph()">
+                    <span>Show Axis Values</span>
+                </label>
+                
+                <label class="checkbox-label">
+                    <input type="checkbox" id="show-intersections" onchange="findAndDisplayIntersections()">
+                    <span>Find Intersections (Precise)</span>
+                </label>
+                
+                <label class="checkbox-label">
+                    <input type="checkbox" id="use-degrees" onchange="updateGraph()">
+                    <span>Use Degrees (instead of Radians)</span>
+                </label>
+            </div>
+            
+            <!-- Intersections -->
+            <div class="intersections-box" id="intersections-box" style="display: none;">
+                <h3>Intersections (<span id="intersection-count">0</span>)</h3>
+                <div class="intersection-list" id="intersection-list"></div>
+            </div>
+            
+            <!-- Help -->
+            <div class="help-box">
+                <div style="font-weight: bold; color: white; margin-bottom: 0.5rem;">Controls:</div>
+                <div>🖱️ Left drag: Rotate view</div>
+                <div>🖱️ Right drag: Pan camera</div>
+                <div>🖱️ Scroll: Zoom in/out</div>
+            </div>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>
