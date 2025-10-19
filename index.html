@@ -7,6 +7,7 @@
     <link rel="stylesheet" href="styles.css">
     <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r128/three.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/mathjs/11.11.0/math.min.js"></script>
+    <script defer src="script.js"></script>
 </head>
 <body>
     <div id="container">
@@ -141,12 +142,10 @@
         </div>
     </div>
 
-    <script src="script.js"></script>
     <script>
         // Fallback error checking
         window.addEventListener('error', function(e) {
             console.error('Error:', e.message, 'at', e.filename, ':', e.lineno);
-            document.body.innerHTML += '<div style="position:fixed;top:0;left:0;right:0;background:red;color:white;padding:10px;z-index:9999;">ERROR: ' + e.message + '</div>';
         });
         
         // Check if libraries loaded
@@ -156,6 +155,9 @@
             }
             if (typeof math === 'undefined') {
                 alert('Math.js failed to load. Check your internet connection.');
+            }
+            if (typeof window.setDimension === 'undefined') {
+                alert('Script.js failed to load. Check that the file exists in the same folder.');
             }
         }, 2000);
     </script>
