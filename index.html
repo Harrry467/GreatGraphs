@@ -17,11 +17,11 @@
             <!-- Dimension Selector -->
             <div class="section">
                 <label>Dimension:</label>
-                <div class="dimension-buttons">
-                    <button class="btn btn-dimension" onclick="setDimension('2D')">2D</button>
-                    <button class="btn btn-dimension active" onclick="setDimension('3D')">3D</button>
-                    <button class="btn btn-dimension" onclick="setDimension('4D')">4D</button>
-                    <button class="btn btn-dimension" onclick="setDimension('5D')">5D</button>
+                <div class="dimension-buttons" id="dimension-buttons">
+                    <button class="btn btn-dimension" onclick="window.setDimension('2D')">2D</button>
+                    <button class="btn btn-dimension active" onclick="window.setDimension('3D')">3D</button>
+                    <button class="btn btn-dimension" onclick="window.setDimension('4D')">4D</button>
+                    <button class="btn btn-dimension" onclick="window.setDimension('5D')">5D</button>
                 </div>
             </div>
             
@@ -33,7 +33,7 @@
             
             <!-- Math Keyboard Toggle -->
             <div class="section">
-                <button class="btn btn-secondary" onclick="toggleKeyboard()" id="keyboard-toggle">
+                <button class="btn btn-secondary" onclick="window.toggleKeyboard()" id="keyboard-toggle">
                     Show Math Keyboard ⌨️
                 </button>
             </div>
@@ -41,35 +41,35 @@
             <!-- Math Keyboard -->
             <div id="math-keyboard" class="math-keyboard" style="display: none;">
                 <div class="keyboard-row">
-                    <button onclick="insertSymbol('√(')">√</button>
-                    <button onclick="insertSymbol('^2')">x²</button>
-                    <button onclick="insertSymbol('^3')">x³</button>
-                    <button onclick="insertSymbol('^')">xⁿ</button>
+                    <button onclick="window.insertSymbol('√(')">√</button>
+                    <button onclick="window.insertSymbol('^2')">x²</button>
+                    <button onclick="window.insertSymbol('^3')">x³</button>
+                    <button onclick="window.insertSymbol('^')">xⁿ</button>
                 </div>
                 <div class="keyboard-row">
-                    <button onclick="insertSymbol('sin(')">sin</button>
-                    <button onclick="insertSymbol('cos(')">cos</button>
-                    <button onclick="insertSymbol('tan(')">tan</button>
-                    <button onclick="insertSymbol('abs(')">|x|</button>
+                    <button onclick="window.insertSymbol('sin(')">sin</button>
+                    <button onclick="window.insertSymbol('cos(')">cos</button>
+                    <button onclick="window.insertSymbol('tan(')">tan</button>
+                    <button onclick="window.insertSymbol('abs(')">|x|</button>
                 </div>
                 <div class="keyboard-row">
-                    <button onclick="insertSymbol('log(')">log</button>
-                    <button onclick="insertSymbol('exp(')">eˣ</button>
-                    <button onclick="insertSymbol('pi')">π</button>
-                    <button onclick="insertSymbol('e')">e</button>
+                    <button onclick="window.insertSymbol('log(')">log</button>
+                    <button onclick="window.insertSymbol('exp(')">eˣ</button>
+                    <button onclick="window.insertSymbol('pi')">π</button>
+                    <button onclick="window.insertSymbol('e')">e</button>
                 </div>
                 <div class="keyboard-row">
-                    <button onclick="insertSymbol('(')">(</button>
-                    <button onclick="insertSymbol(')')">)</button>
-                    <button onclick="insertSymbol('/')">/</button>
-                    <button onclick="insertSymbol('*')">×</button>
+                    <button onclick="window.insertSymbol('(')">(</button>
+                    <button onclick="window.insertSymbol(')')">)</button>
+                    <button onclick="window.insertSymbol('/')">/</button>
+                    <button onclick="window.insertSymbol('*')">×</button>
                 </div>
             </div>
             
             <!-- Color Dimension -->
             <div class="section" id="color-dimension-section" style="display: none;">
                 <label>Color (5th dim) =</label>
-                <input type="text" id="color-dimension" placeholder="x + y" oninput="updateGraph()">
+                <input type="text" id="color-dimension" placeholder="x + y" oninput="window.updateGraph()">
                 <div class="color-preview" id="color-preview"></div>
             </div>
             
@@ -77,7 +77,7 @@
             <div class="section">
                 <h3>Axis Range</h3>
                 <label>Range: <span class="value-tag" id="range-label">-5 to 5</span></label>
-                <input type="range" id="axis-range" min="1" max="100" step="1" value="5" oninput="updateAxisRange()">
+                <input type="range" id="axis-range" min="1" max="100" step="1" value="5" oninput="window.updateAxisRange()">
                 <div class="slider-labels">
                     <span>Small (1)</span>
                     <span>Large (100)</span>
@@ -87,8 +87,8 @@
             <!-- Time Controls -->
             <div class="time-control" id="time-control" style="display: none;">
                 <label>Time (t): <span class="value-tag" id="time-value">0.00</span></label>
-                <input type="range" id="time-slider" min="0" max="12.566" step="0.1" value="0" oninput="updateTimeValue()">
-                <button class="btn btn-primary" id="animate-btn" onclick="toggleAnimation()" style="margin-top: 0.75rem;">▶ Animate</button>
+                <input type="range" id="time-slider" min="0" max="12.566" step="0.1" value="0" oninput="window.updateTimeValue()">
+                <button class="btn btn-primary" id="animate-btn" onclick="window.toggleAnimation()" style="margin-top: 0.75rem;">▶ Animate</button>
             </div>
             
             <!-- Display Options -->
@@ -97,7 +97,7 @@
                 
                 <div style="margin-bottom: 1rem;">
                     <label>Resolution: <span class="value-tag" id="resolution-label">50×50×50</span></label>
-                    <input type="range" id="resolution" min="10" max="200" step="10" value="50" oninput="updateResolution()">
+                    <input type="range" id="resolution" min="10" max="200" step="10" value="50" oninput="window.updateResolution()">
                     <div class="slider-labels">
                         <span>Low (Fast)</span>
                         <span>High (Detailed)</span>
@@ -105,22 +105,22 @@
                 </div>
                 
                 <label class="checkbox-label">
-                    <input type="checkbox" id="show-axes" checked onchange="updateGraph()">
+                    <input type="checkbox" id="show-axes" checked onchange="window.updateGraph()">
                     <span>Show Axes</span>
                 </label>
                 
                 <label class="checkbox-label">
-                    <input type="checkbox" id="show-values" onchange="updateGraph()">
+                    <input type="checkbox" id="show-values" onchange="window.updateGraph()">
                     <span>Show Axis Values</span>
                 </label>
                 
                 <label class="checkbox-label">
-                    <input type="checkbox" id="show-intersections" onchange="findAndDisplayIntersections()">
+                    <input type="checkbox" id="show-intersections" onchange="window.findAndDisplayIntersections()">
                     <span>Find Intersections (Precise)</span>
                 </label>
                 
                 <label class="checkbox-label">
-                    <input type="checkbox" id="use-degrees" onchange="updateGraph()">
+                    <input type="checkbox" id="use-degrees" onchange="window.updateGraph()">
                     <span>Use Degrees (instead of Radians)</span>
                 </label>
             </div>
@@ -142,5 +142,22 @@
     </div>
 
     <script src="script.js"></script>
+    <script>
+        // Fallback error checking
+        window.addEventListener('error', function(e) {
+            console.error('Error:', e.message, 'at', e.filename, ':', e.lineno);
+            document.body.innerHTML += '<div style="position:fixed;top:0;left:0;right:0;background:red;color:white;padding:10px;z-index:9999;">ERROR: ' + e.message + '</div>';
+        });
+        
+        // Check if libraries loaded
+        setTimeout(function() {
+            if (typeof THREE === 'undefined') {
+                alert('Three.js failed to load. Check your internet connection.');
+            }
+            if (typeof math === 'undefined') {
+                alert('Math.js failed to load. Check your internet connection.');
+            }
+        }, 2000);
+    </script>
 </body>
 </html>
